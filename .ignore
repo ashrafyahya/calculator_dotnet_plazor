@@ -1,0 +1,46 @@
+## Build results
+bin/
+obj/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## VSCode settings
+.vscode/
+
+## IDE stuff
+*.dbmdl
+*.dbproj.schemaview
+*.pdb
+*.cache
+
+## ASP.NET / Blazor / Razor specific
+**/wwwroot/**/*.min.js
+**/wwwroot/**/*.min.css
+**/wwwroot/lib/
+**/wwwroot/node_modules/
+
+## Logs
+*.log
+
+## Temporary files
+*.tmp
+*.temp
+*.bak
+
+## OS-specific files
+.DS_Store
+Thumbs.db
+
+## Publish output
+publish/
+out/
+
+## Dependency folders
+node_modules/
+packages/
+
+.sln
