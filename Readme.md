@@ -31,7 +31,7 @@ dotnet add package Blazored.LocalStorage
 - Install: C# Dev Kit (recommended)
 
 
-# 🧱 2. Structure of a Blazor WebAssembly Project
+## 🧱 2. Structure of a Blazor WebAssembly Project
 RechnerBlazor/
 ├── Program.cs
 ├── wwwroot/
@@ -44,14 +44,14 @@ RechnerBlazor/
 
 
 
-# ▶️ 3. Start the Project (Terminal)
+## ▶️ 3. Start the Project (Terminal)
 ```dotnet run```
 
 Blazor will launch a local web server, for example:  
 Now listening on: https://localhost:7213  
 Open the URL in your browser — your calculator is online! 🎉
 
-# 🛠️ Create a New Blazor WebAssembly Project
+## 🛠️ Create a New Blazor WebAssembly Project
 ```dotnet new blazorwasm -n ProjektName```
 ```cd ProjektName```
 ```code .```
