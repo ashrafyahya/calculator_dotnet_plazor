@@ -1,0 +1,31 @@
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h5>📜 Verlauf:</h5>
+
+@if (Eintraege.Any())
+{
+    <ul class="list-group mb-2">
+        @foreach (var eintrag in Eintraege.Reverse<string>())
+        {
+            <li class="list-group-item">@eintrag</li>
+        }
+    </ul>
+    <button class="btn btn-secondary" @onclick="Exportieren">Als .txt exportieren</button>
+}
+else
+{
+    <p>Kein Verlauf vorhanden.</p>
+}
+
+@code {
+    [Parameter] public List<string> Eintraege { get; set; } = new();
+
+    private async Task Exportieren()
+    {
+        string content = string.Join("\n", Eintraege);
+        string fileName = $"rechner_verlauf_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+        await JSRuntime.InvokeVoidAsync("downloadFile", fileName, content);
+    }
+
+    [Inject] IJSRuntime JSRuntime { get; set; } = default!;
+}

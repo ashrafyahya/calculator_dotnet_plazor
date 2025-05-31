@@ -1,0 +1,47 @@
+﻿@page "/"
+@using RechnerBlazor.Components
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h1>🧮 Taschenrechner</h1>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div style="color:red">@errorMessage</div>
+}
+
+<RechnerForm OnNewEntry="HandleNewEntry" />
+
+<VerlaufListe Eintraege="@verlauf" />
+
+@code {
+    List<string> verlauf = new();
+    string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var gespeicherterVerlauf = await localStorage.GetItemAsync<List<string>>("rechner-verlauf");
+            if (gespeicherterVerlauf != null)
+                verlauf = gespeicherterVerlauf;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Fehler beim Laden des Verlaufs: {ex.Message}";
+            // Optional: await localStorage.RemoveItemAsync("rechner-verlauf");
+        }
+    }
+
+    async Task HandleNewEntry(string eintrag)
+    {
+        try
+        {
+            verlauf.Add(eintrag);
+            await localStorage.SetItemAsync("rechner-verlauf", verlauf);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Fehler beim Speichern des Verlaufs: {ex.Message}";
+        }
+    }
+}

@@ -1,0 +1,65 @@
+@using System.Globalization
+@* @inject EventCallback<string> OnNewEntry *@
+
+<div class="mb-3">
+    <input class="form-control" @bind="zahl1" placeholder="Zahl 1" />
+</div>
+<div class="mb-3">
+    <input class="form-control" @bind="zahl2" placeholder="Zahl 2 (wenn benötigt)" />
+</div>
+<div class="mb-3">
+    <select class="form-select" @bind="operatorText">
+        <option value="">-- Wähle Operation --</option>
+        <option value="+">Addition (+)</option>
+        <option value="-">Subtraktion (-)</option>
+        <option value="*">Multiplikation (*)</option>
+        <option value="/">Division (/)</option>
+        <option value="%">Modulo (%)</option>
+        <option value="^">Potenzierung (x^y)</option>
+        <option value="√">Wurzel (√x)</option>
+        <option value="!">Fakultät (x!)</option>
+        <option value="neg">Vorzeichen wechseln (-x)</option>
+        <option value="log">Logarithmus (log10)</option>
+    </select>
+</div>
+<button class="btn btn-primary w-100 mb-3" @onclick="Berechne">Berechnen</button>
+
+@if (!string.IsNullOrWhiteSpace(ergebnis))
+{
+    <div class="alert alert-success"><strong>Ergebnis:</strong> @ergebnis</div>
+}
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnNewEntry { get; set; }
+
+    string zahl1 = "", zahl2 = "", operatorText = "", ergebnis = "";
+
+    async Task Berechne()
+    {
+        bool ok1 = double.TryParse(zahl1, NumberStyles.Float, CultureInfo.InvariantCulture, out double z1);
+        bool ok2 = double.TryParse(zahl2, NumberStyles.Float, CultureInfo.InvariantCulture, out double z2);
+
+        string rechnung = "", erg = "";
+
+        switch (operatorText)
+        {
+            case "+": if (ok1 && ok2) { erg = (z1 + z2).ToString(); rechnung = $"{z1} + {z2} = {erg}"; } break;
+            case "-": if (ok1 && ok2) { erg = (z1 - z2).ToString(); rechnung = $"{z1} - {z2} = {erg}"; } break;
+            case "*": if (ok1 && ok2) { erg = (z1 * z2).ToString(); rechnung = $"{z1} * {z2} = {erg}"; } break;
+            case "/": if (!ok1 || !ok2) erg = "Ungültig"; else if (z2 == 0) erg = "Div/0"; else { erg = (z1 / z2).ToString(); rechnung = $"{z1} / {z2} = {erg}"; } break;
+            case "%": if (ok1 && ok2) { erg = (z1 % z2).ToString(); rechnung = $"{z1} % {z2} = {erg}"; } break;
+            case "^": if (ok1 && ok2) { erg = Math.Pow(z1, z2).ToString(); rechnung = $"{z1} ^ {z2} = {erg}"; } break;
+            case "√": if (!ok1 || z1 < 0) erg = "Ungültig"; else { erg = Math.Sqrt(z1).ToString(); rechnung = $"√{z1} = {erg}"; } break;
+            case "!": if (!ok1 || z1 < 0 || z1 % 1 != 0) erg = "Nur ganzzahlig"; else { long f = 1; for (int i = 2; i <= (int)z1; i++) f *= i; erg = f.ToString(); rechnung = $"{z1}! = {erg}"; } break;
+            case "neg": if (ok1) { erg = (-z1).ToString(); rechnung = $"-({z1}) = {erg}"; } break;
+            case "log": if (!ok1 || z1 <= 0) erg = "Nur >0"; else { erg = Math.Log10(z1).ToString(); rechnung = $"log({z1}) = {erg}"; } break;
+        }
+
+        ergebnis = erg;
+        if (!string.IsNullOrWhiteSpace(rechnung))
+        {
+            await OnNewEntry.InvokeAsync(rechnung);
+        }
+    }
+}
