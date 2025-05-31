@@ -1,42 +1,57 @@
-# ✅ 1. Voraussetzungen installieren
-### 🔧 1.1 .NET SDK installieren
+# .NET with Blazor
 
-- Gehe auf: https://dotnet.microsoft.com/download
+This is a starter project for using .NET with Blazor.  
+**GUI**: Blazor  
+**Framework**: .NET  
+**Programming Language**: C#
 
-- Lade das aktuelle .NET SDK (nicht Runtime!) herunter und installiere es (.NET 8).
+---
 
-- Nach der Installation:
+## 🖼️ Program Appearance
+![Operations](Images/Operationen.jpg)  
+
+![Calculator](Images/Taschenrechner.png)
+
+---
+
+## ✅ 1. Install Prerequisites
+
+### 🔧 1.1 Install .NET SDK
+- Visit: [https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
+- Download and install the latest **.NET SDK** (not just the Runtime) — use **.NET 8**
+- After installation, verify:
+
 ```dotnet --version```
 
-### 📦 Paket installieren
+### 📦  Install Required Package
 dotnet add package Blazored.LocalStorage
 
 
-### 🔧 1.2 VSCode Erweiterung
-- Installiere: C# Dev Kit (empfohlen)
+### 🔧 1.2 VSCode Extension
+- Install: C# Dev Kit (recommended)
 
 
-# 🧱 2. Aufbau eines Blazor WebAssembly Projekts
+# 🧱 2. Structure of a Blazor WebAssembly Project
 RechnerBlazor/
 ├── Program.cs
 ├── wwwroot/
 ├── Pages/
-│   └── Index.razor ← hier bauen wir den Rechner ein
+│   └── Index.razor ← this is where we build the calculator
 ├── Components/
-|   └── RechnerForm.razor
-|   └── VerlaufListe.razor
+│   └── RechnerForm.razor
+│   └── VerlaufListe.razor
 └── App.razor
 
 
-# ▶️ 3. Projekt starten (in Terminal)
+
+# ▶️ 3. Start the Project (Terminal)
 ```dotnet run```
 
-Dann wird Blazor den lokalen Webserver starten, z. B.:
-Now listening on: https://localhost:7213
-Öffne die URL im Browser – dein Rechner ist online! 🎉
+Blazor will launch a local web server, for example:  
+Now listening on: https://localhost:7213  
+Open the URL in your browser — your calculator is online! 🎉
 
-
-# 🛠️ Neues Blazor WebAssembly Projekt erstellen
+# 🛠️ Create a New Blazor WebAssembly Project
 ```dotnet new blazorwasm -n ProjektName```
 ```cd ProjektName```
 ```code .```
